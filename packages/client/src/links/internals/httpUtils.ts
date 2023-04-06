@@ -1,4 +1,4 @@
-import { ProcedureType } from '@trpc/server';
+import { ProcedureType, Serializeable } from '@trpc/server';
 import { TRPCResponse } from '@trpc/server/rpc';
 import { getFetch } from '../../getFetch';
 import { getAbortController } from '../../internals/getAbortController';
@@ -73,7 +73,7 @@ export interface HTTPResult {
 
 type GetInputOptions = {
   runtime: TRPCClientRuntime;
-} & ({ inputs: unknown[] } | { input: unknown });
+} & ({ inputs: Serializeable[] } | { input: Serializeable });
 
 function getInput(opts: GetInputOptions) {
   return 'input' in opts
