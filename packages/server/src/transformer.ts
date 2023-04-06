@@ -2,34 +2,34 @@
  * @public
  */
 export interface DataTransformer {
-  serialize(object: any): JsonParseable;
-  deserialize(object: JsonParseable): any;
+  serialize(object: Serializeable): any;
+  deserialize(object: any): Serializeable;
 }
 
-type JsonParseable =  boolean | number | string | null | JsonArray | JsonMap;
-interface JsonMap {  [key: string]: AnyJson; }
-interface JsonArray extends Array<AnyJson> {}
+export type Serializeable =  boolean | number | string | null | JsonArray | JsonMap;
+type JsonMap = {  [key: string]: Serializeable; }
+type JsonArray = Array<Serializeable>
 
 interface InputDataTransformer extends DataTransformer {
   /**
    * This function runs **on the client** before sending the data to the server.
    */
-  serialize(object: any): JsonParseable;
+  serialize(object: Serializeable): any;
   /**
    * This function runs **on the server** to transform the data before it is passed to the resolver
    */
-  deserialize(object: JsonParseable): any;
+  deserialize(object: any): Serializeable;
 }
 
 interface OutputDataTransformer extends DataTransformer {
   /**
    * This function runs **on the server** before sending the data to the client.
    */
-  serialize(object: any): JsonParseable;
+  serialize(object: Serializeable): any;
   /**
    * This function runs **only on the client** to transform the data sent from the server.
    */
-  deserialize(object: JsonParseable): any;
+  deserialize(object: any): Serializeable;
 }
 
 /**
